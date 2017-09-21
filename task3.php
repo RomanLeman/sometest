@@ -39,38 +39,35 @@ require_once("./api/db/zollaTables.class.php");
     <div class="grid-container">
       <div class="grid-x grid-padding-x">
         <div class="large-12 cell">
-          <h1></h1>
+          <h2></h2>
         </div>
       </div>
-      <div class="grid-x grid-padding-x">
-        <div class="large-4 cell">  
-          <label>Select table
-            <select>
-              <?php
-              echo $zolla->renderTablesList();
-              ?>
-            </select>
-          </label>
-        </div>
-      </div>
+    
       
       <div class="grid-x grid-padding-x">
-        <div class="large-12 cell">
-          <p>Table output</p>
+        
+      
+        <div class="large-4 cell">
+          <img alt="1" class="click" src="/img/nap.png"/>
         </div>
 
-        <div class="large-12 cell">
-          
-            
-           
-              <?php
-               echo $zolla->renderTable();
-              ?>
-          
-          </table>
+        <div class="large-4 cell">
+          <img alt="2" class="click" src="/img/nap.png"/>
         </div>
 
+        <div class="large-4 cell">
+          <img alt="3" class="click" src="/img/nap.png"/>
+        </div>
+          <div class="large-3 cell"></div>
+          <div class="large-6 cell">
+          <h1 id="advise"></h1>
+        </div>
       </div>
+
+      
+        
+  
+
 
 
     </div>
@@ -81,19 +78,29 @@ require_once("./api/db/zollaTables.class.php");
     <script src="js/app.js"></script>
 
     <script>
-      $.get( "/api/get_table.php", { table_id: 16 } , function( data ) {
-          $( "#table-output" )
-            .html( data );
-      }, "html" ); 
-      $('select').on('change', function() {
-        $.get( "/api/get_table.php", { table_id: this.value } , function( data ) {
-          $( "#table-output" )
-            .html( data );
-        }, "html" );        
-      })
+     $(".click").on('click', function () {
+        $(".click").off('click');
+        let a = $(this).attr("alt");
+        let self = this;
+        $.get( "api/answer.php",  { v: a }, function( data ) {
+          console.log(data);
+          if( data == "1" ) {
+            $(self).attr('src', '/img/victory.png');
+            $('#advise').html("Your win!");
+          }
+          else{
+            $(self).attr('src', '/img/lenin.jpg');
+            $('#advise').html("Maybe another time :-(");
+          }
+         
+          
+        });
 
+       $(this).attr('style', 'margin-left: 68px;margin-top: 73px;');
+        
 
-
+     });
+  
     </script>
   </body>
 </html>

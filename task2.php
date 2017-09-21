@@ -24,7 +24,7 @@ require_once("./api/db/zollaTables.class.php");
         <ul class="dropdown menu" data-dropdown-menu>
           <li class="menu-text">Test for </li>
           <li><a href ="/"> <img src="/img/logo.png" style="height: 34px;margin-top: -12px;"></img></a></li>
-          <li>
+           <li>
             <a href="/">Test #1</a>
             
           </li>
@@ -38,39 +38,28 @@ require_once("./api/db/zollaTables.class.php");
 
     <div class="grid-container">
       <div class="grid-x grid-padding-x">
-        <div class="large-12 cell">
-          <h1></h1>
+       	<div class="large-12 cell">
+          	<br>
+          	<h4>Input text</h4>
         </div>
-      </div>
-      <div class="grid-x grid-padding-x">
-        <div class="large-4 cell">  
-          <label>Select table
-            <select>
-              <?php
-              echo $zolla->renderTablesList();
-              ?>
-            </select>
-          </label>
-        </div>
-      </div>
-      
-      <div class="grid-x grid-padding-x">
-        <div class="large-12 cell">
-          <p>Table output</p>
+        <div class="large-5 cell">
+          <textarea id="txt" rows="10" cols="100" name="text"></textarea>
         </div>
 
         <div class="large-12 cell">
-          
-            
-           
-              <?php
-               echo $zolla->renderTable();
-              ?>
-          
-          </table>
+          <button id="btntxt" class="button">Parse</button>
         </div>
 
+        <div id="rslt" class="large-12 cell">
+         <p></p>
+        </div>
+
+
+
+
       </div>
+
+     
 
 
     </div>
@@ -81,18 +70,21 @@ require_once("./api/db/zollaTables.class.php");
     <script src="js/app.js"></script>
 
     <script>
-      $.get( "/api/get_table.php", { table_id: 16 } , function( data ) {
-          $( "#table-output" )
-            .html( data );
-      }, "html" ); 
-      $('select').on('change', function() {
-        $.get( "/api/get_table.php", { table_id: this.value } , function( data ) {
-          $( "#table-output" )
-            .html( data );
-        }, "html" );        
-      })
 
-
+  		 $("#btntxt").on('click', function () {
+  		 		$("#rslt").html("<h4> parsed dates:</h4>");
+  		 		var str = $('#txt').val();
+  		 		var regexp = /[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]/gi;
+  		 		var matches = str.match(regexp);
+  		 		//var matches = str.match(regexp);
+        		matches.forEach(function(value){
+        			let date = new Date(value);
+        			let unix = Date.parse(value);
+        			$("#rslt").append("<p>Date:" + value + " </p><p> UNIXTIME:"  + unix + "</p><br>");
+        		});
+       		
+     	 });
+  		
 
     </script>
   </body>
