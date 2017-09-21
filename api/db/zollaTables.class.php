@@ -4,9 +4,9 @@ class ZollaTablesClass{
 
 	private $host="localhost"; 
       
-    private $user="root"; 
+    private $user="user"; 
       
-    private $password="sarmat12"; 
+    private $password="pass"; 
     
     private $db = 'zolla';
 
@@ -191,9 +191,9 @@ class ZollaTablesClass{
 		}
 
     }
-    
+
     public function getTableData($table_id){
-        $table_id = $table_id;
+        $table_id = intval($table_id);
         $res = [];
         $conn = new PDO("mysql:host=$this->host", $this->user, $this->password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
